@@ -138,7 +138,7 @@ public class LD001plugin {
         }
         Path file = Paths.get(args[0] + "run.gcode");
         Files.delete(file);
-        Path sourceFile = Paths.get(args[0] + "../plugin/LD001/nova3d-reference_slice.conf");
+        Path sourceFile = Paths.get(args[0] + "../plugin/Nova3DPlugin/nova3d-reference_slice.conf");
         file = Paths.get(args[0] + "slice.conf");
         Files.copy(sourceFile, file, StandardCopyOption.REPLACE_EXISTING );
         file = Paths.get(args[0] + "preview.png");
