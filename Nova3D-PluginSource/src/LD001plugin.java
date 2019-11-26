@@ -39,7 +39,8 @@ public class LD001plugin {
           else if (line.startsWith(";START_GCODE_BEGIN")) {
             header = false;
             startCode = true;
-            template.append(";Number of Slices = ").append(data.get("totalLayer")).append("\n");
+            DecimalFormat df = new DecimalFormat("0.##");
+            template.append(";Number of Slices = ").append(df.format(data.get("totalLayer"))).append("\n");
             template.append(";Z Lift Feed Rate = ").append(data.get("normalLayerLiftSpeed")).append("\n");
             template.append(";Lift Distance = ").append(data.get("normalLayerLiftHeight")).append("\n");
             template.append(";ROW CALCULATED VALUES\n");
