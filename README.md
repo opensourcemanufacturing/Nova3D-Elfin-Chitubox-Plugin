@@ -28,4 +28,4 @@ This is a adaptation for Nova3D Elfin and other Nova printers of Chitubox JAVA p
 
 
 ----
-https://www.dropbox.com/sh/9eqqny9e2jqq362/AABAShOrNRETwwQUG7y-CDZOa?dl=0
+*The original ceality LD001 JAVA project by Barhk can be found [>> here <<](https://www.dropbox.com/sh/9eqqny9e2jqq362/AABAShOrNRETwwQUG7y-CDZOa?dl=0)*
