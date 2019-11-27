@@ -4,7 +4,7 @@ This is a adaptation for Nova3D Elfin and other Nova printers of Chitubox JAVA p
 
 ## Instalation
 
-- Download the git project as zip (big green button)
+- Download the git project as zip [(the big green button on the root page)](https://github.com/opensourcemanufacturing/Nova3D-Elfin/archive/master.zip)
 - Unzip the folder to your desktop
 - Open folder and install .CHplugin by double clicking on it (Should open chitubox and register the plugin automatically)
 - Create a new default printer and rename it Nova3D
