@@ -21,7 +21,9 @@ This is a adaptation for Nova3D Elfin and other Nova printers of Chitubox JAVA p
  - Get JRE from Java website [>> here <<](https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
  - Install it and try slicing your file again.
 
-Any other problems you find please open a issue describing your problem by clicking [>> here <<](https://github.com/opensourcemanufacturing/Nova3D-Elfin/issues/new)
+## Other issues and Feature Requests
+
+- Any other problems you find please open a issue describing your problem by clicking [>> here <<](https://github.com/opensourcemanufacturing/Nova3D-Elfin/issues/new)
 
 
 
