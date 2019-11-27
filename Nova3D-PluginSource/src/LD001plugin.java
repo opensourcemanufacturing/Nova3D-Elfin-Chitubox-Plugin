@@ -1,3 +1,6 @@
+// Based on Barhk JAVA code. Adapted for Nova3D by X3msnake
+// RecodeVer 1.191127
+
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
@@ -7,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,27 +70,55 @@ public class LD001plugin {
               template.append("<#list slices as slice>\n");
               template.append("<#assign image=slice.image exposure_time=slice.exposure_time rise_dist=slice.rise_dist fall_dist=slice.fall_dist>\n");
               template.append("<#assign rise_pos=slice.rise_pos fall_pos=slice.fall_pos rise_speed=slice.rise_speed fall_speed=slice.fall_speed>\n");
-              template.append("<#assign layer=slice.layer fall_pos=slice.fall_pos rise_speed=slice.rise_speed fall_speed=slice.fall_speed>\n");
+              template.append("<#assign layer=slice.layer fall_pos=slice.fall_pos rise_speed=slice.rise_speed fall_speed=slice.fall_speed peel_delay=slice.peel_delay>\n");
               template.append("\n;LAYER_START:[=layer]\n");
               bottomLayers = (double) data.get("bottomLayerCount");
             }
             printData = true;
             slice = new HashMap<>();
             slices.add(slice);
+
             double layer = Double.parseDouble(line.substring(line.lastIndexOf(":") + 1));
+            double bottomLayerExposureTime  = (double)data.get("bottomLayerExposureTime");
+            double normalExposureTime       = (double)data.get("normalExposureTime");
+            double bottomLayerLiftHeight    = (double)data.get("bottomLayerLiftHeight");
+            double normalLayerLiftHeight    = (double)data.get("normalLayerLiftHeight");
+            double layerHeight              = (double)data.get("layerHeight");
+            double normalDropSpeed          = (double)data.get("normalDropSpeed");
+            double bottomLayerLiftSpeed     = (double)data.get("bottomLayerLiftSpeed");
+            double normalLayerLiftSpeed     = (double)data.get("normalLayerLiftSpeed");
+
             slice.put("image", layer + ".png");
             slice.put("layer", layer);
-            slice.put("exposure_time", (layer < bottomLayers) ? data.get("bottomLayerExposureTime") : data.get("normalExposureTime"));
-            slice.put("rise_dist", (layer < bottomLayers) ? data.get("bottomLayerLiftHeight") : data.get("normalLayerLiftHeight"));
+
+            slice.put("exposure_time", (layer < bottomLayers)
+                    ? bottomLayerExposureTime
+                    : normalExposureTime);
+
+            slice.put("rise_dist", (layer < bottomLayers)
+                    ? bottomLayerLiftHeight
+                    : normalLayerLiftHeight);
+
             slice.put("fall_dist", (layer < bottomLayers)
-              ? (double) data.get("bottomLayerLiftHeight") - (double) data.get("layerHeight")
-              : (double) data.get("normalLayerLiftHeight") - (double) data.get("layerHeight"));
+                    ? bottomLayerLiftHeight - layerHeight
+                    : normalLayerLiftHeight - layerHeight);
+
             slice.put("rise_pos", (layer < bottomLayers)
-              ? (double) data.get("bottomLayerLiftHeight") + layer * (double) data.get("layerHeight")
-              : (double) data.get("normalLayerLiftHeight") + layer * (double) data.get("layerHeight"));
-            slice.put("fall_pos", (layer + 1) * (double) data.get("layerHeight"));
-            slice.put("rise_speed", (layer < bottomLayers) ? data.get("bottomLayerLiftSpeed") : data.get("normalLayerLiftSpeed"));
-            slice.put("fall_speed", data.get("normalDropSpeed"));
+                    ? bottomLayerLiftHeight + layer * layerHeight
+                    : normalLayerLiftHeight + layer * layerHeight);
+
+            slice.put("fall_pos", (layer + 1) * layerHeight);
+            slice.put("rise_speed", (layer < bottomLayers)
+                    ? bottomLayerLiftSpeed
+                    : normalLayerLiftSpeed);
+
+            slice.put("fall_speed", normalDropSpeed);
+            //-->> rise_dist / (rise_speed / 60) * 1000 + fall_dist / (fall_speed/60) * 1000 + 850)
+            slice.put("peel_delay", (layer < bottomLayers)
+                    ?  Math.round( bottomLayerLiftHeight / (bottomLayerLiftSpeed/60)*1000 + (bottomLayerLiftHeight - layerHeight) / (normalDropSpeed/60) * 1000 + 850)
+                    :  Math.round( normalLayerLiftHeight / (normalLayerLiftSpeed/60)*1000 + (normalLayerLiftHeight - layerHeight) / (normalDropSpeed/60) * 1000 + 850));
+
+
           } else if (line.startsWith(";END_GCODE_BEGIN")) {
             template.append("\n").append(line).append("\n");
             endCode = true;
