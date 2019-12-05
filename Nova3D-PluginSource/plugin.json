@@ -8,7 +8,7 @@
 		"winExecPath":"plugin.bat" ,
 		"macExecPath":"plugin.bat",
 		"linuxExecPath":"plugin.bat",
-		"inputSuffix":"zip_raw_png_32b" ,
+		"inputSuffix":"zip_raw_png" ,
 		"outputSuffix":"cws",
 		"detail":"version Nova_1.1",
 		"requireVersion":"V1.5.0"
