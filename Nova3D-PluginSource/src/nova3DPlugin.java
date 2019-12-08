@@ -1,5 +1,8 @@
-// Based on Barhk JAVA code. Adapted for Nova3D by X3msnake
-// RecodeVer 1.191127
+/*
+ Based on Barhk JAVA code for LD001.
+ Adapted for Nova3D by X3msnake
+ RecodeVer 2.191208
+*/
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -16,14 +19,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LD001plugin {
+public class nova3DPlugin {
   public static void main(String... args) {
+
     try {
       System.out.println("Out to:" + args[0] + "slice.gcode\n");
+
       OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(args[0] + "slice.gcode"));
-      StringBuilder template = new StringBuilder(";v1.0 - all variables are accessible by Apache Freemaker SQUARE_BRACKET_INTERPOLATION_SYNTAX\n");
+      StringBuilder template = new StringBuilder();
+
+      template.append(";v1.0 - all variables are accessible by Apache Freemaker SQUARE_BRACKET_INTERPOLATION_SYNTAX\n");
       template.append(";you can review final template with ;printFreemakerTemplate=true comment\n");
+
       BufferedReader isr = null;
+
       try {
         isr = new BufferedReader(new FileReader(args[0] + "run.gcode"));
         Map<String, Object> data = new HashMap<>();
@@ -44,6 +53,7 @@ public class LD001plugin {
             header = false;
             startCode = true;
             DecimalFormat df = new DecimalFormat("0.##");
+            template.append(";Layer Thickness = ").append(data.get("layerHeight")).append("\n");
             template.append(";Number of Slices = ").append(df.format(data.get("totalLayer"))).append("\n");
             template.append(";Z Lift Feed Rate = ").append(data.get("normalLayerLiftSpeed")).append("\n");
             template.append(";Lift Distance = ").append(data.get("normalLayerLiftHeight")).append("\n");
@@ -171,14 +181,15 @@ public class LD001plugin {
         }
         Path file = Paths.get(args[0] + "run.gcode");
         Files.delete(file);
-        Path sourceFile = Paths.get(args[0] + "../plugin/Nova3DPlugin/nova3d-reference_slice.conf");
+        Path sourceFile = Paths.get("nova3d-reference_slice.conf");
         file = Paths.get(args[0] + "slice.conf");
         Files.copy(sourceFile, file, StandardCopyOption.REPLACE_EXISTING );
         file = Paths.get(args[0] + "preview.png");
         Files.move(file, file.resolveSibling("preview_cropping.png"), StandardCopyOption.REPLACE_EXISTING);
         osw.close();
       } catch (Throwable e) {
-        PrintWriter printWriter = new PrintWriter(osw);
+        OutputStreamWriter logfile = new OutputStreamWriter(new FileOutputStream(args[0] + "errors.log"));
+        PrintWriter printWriter = new PrintWriter(logfile);
         e.printStackTrace(printWriter);
         int lineNumber = 1;
         for (String line : template.toString().split("\n"))

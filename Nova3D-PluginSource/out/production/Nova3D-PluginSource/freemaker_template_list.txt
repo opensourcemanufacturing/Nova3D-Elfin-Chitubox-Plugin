@@ -1,0 +1,63 @@
+java.lang.InterruptedException: Interupt for freemaker template print
+	at LD001plugin.main(LD001plugin.java:123)
+/*   1 */ ;v1.0 - all variables are accessible by Apache Freemaker SQUARE_BRACKET_INTERPOLATION_SYNTAX
+/*   2 */ ;you can review final template with ;printFreemakerTemplate=true comment
+/*   3 */ ;fileName:Calibration_Matrix.stl #0
+/*   4 */ ;machineType:default
+/*   5 */ ;estimatedPrintTime:40.8
+/*   6 */ ;volume:0
+/*   7 */ ;resin:normal
+/*   8 */ ;weight:0
+/*   9 */ ;price:0
+/*  10 */ ;layerHeight:500
+/*  11 */ ;resolutionX:1410
+/*  12 */ ;resolutionY:2531
+/*  13 */ ;machineX:66.27
+/*  14 */ ;machineY:118.957
+/*  15 */ ;machineZ:150
+/*  16 */ ;projectType:LCD_mirror
+/*  17 */ ;normalExposureTime:6
+/*  18 */ ;bottomLayExposureTime:10
+/*  19 */ ;bottomLayerExposureTime:10
+/*  20 */ ;normalDropSpeed:300
+/*  21 */ ;normalLayerLiftHeight:6
+/*  22 */ ;zSlowUpDistance:0
+/*  23 */ ;normalLayerLiftSpeed:180
+/*  24 */ ;bottomLayCount:3
+/*  25 */ ;bottomLayerCount:3
+/*  26 */ ;mirror:1
+/*  27 */ ;totalLayer:1
+/*  28 */ ;bottomLayerLiftHeight:8
+/*  29 */ ;bottomLayerLiftSpeed:60
+/*  30 */ ;bottomLightOffTime:2
+/*  31 */ ;lightOffTime:1
+/*  32 */ ;Number of Slices = 1.0
+/*  33 */ ;Z Lift Feed Rate = 180.0
+/*  34 */ ;Lift Distance = 6.0
+/*  35 */ ;ROW CALCULATED VALUES
+/*  36 */ ;image: zero based image/slice index
+/*  37 */ ;exposure_time: calculated exposure time for image/slice/layer
+/*  38 */ ;rise_dist: calculated rise distance for image/slice/layer (relative)
+/*  39 */ ;fall_dist: calculated fall distance for image/slice/layer (relative)
+/*  40 */ ;rise_pos: calculated rise position for image/slice/layer (absolute)
+/*  41 */ ;fall_pos: calculated fall distance for image/slice/layer (absolute)
+/*  42 */ ;rise_speed: calculated rise speed for image/slice/layer
+/*  43 */ ;fall_speed: calculated fall speed for image/slice/layer
+/*  44 */ ;machine_height: copy of 'machineZ'
+/*  45 */ <#assign machine_height=machineZ>
+/*  46 */ ;START_GCODE_BEGIN
+/*  47 */ ;START_GCODE_END
+/*  48 */ <#list slices as slice>
+/*  49 */ <#assign image=slice.image exposure_time=slice.exposure_time rise_dist=slice.rise_dist fall_dist=slice.fall_dist>
+/*  50 */ <#assign rise_pos=slice.rise_pos fall_pos=slice.fall_pos rise_speed=slice.rise_speed fall_speed=slice.fall_speed>
+/*  51 */ <#assign layer=slice.layer fall_pos=slice.fall_pos rise_speed=slice.rise_speed fall_speed=slice.fall_speed>
+/*  52 */ 
+/*  53 */ ;LAYER_START:[=layer]
+/*  54 */ ;currPos:[=layer*layerHeight]
+/*  55 */ 
+/*  56 */ ;LAYER_END
+/*  57 */ </#list>
+/*  58 */ 
+/*  59 */ ;END_GCODE_BEGIN
+/*  60 */ 
+/*  61 */ ;END_GCODE_END
