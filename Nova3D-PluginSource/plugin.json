@@ -7,7 +7,7 @@
 		"type":"outputSlicer" ,
 		"winExecPath":"plugin.bat" ,
 		"macExecPath":"plugin.bat",
-		"linuxExecPath":"plugin.bat",
+		"linuxExecPath":"plugin.sh",
 		"inputSuffix":"zip_raw_png" ,
 		"outputSuffix":"cws",
 		"detail":"version Nova_2.191204",
